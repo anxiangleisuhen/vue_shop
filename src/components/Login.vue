@@ -9,6 +9,7 @@
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
         <!--用户名-->
         <el-form-item prop="username">
+          <!--使用第三方图标库的用法-->
           <el-input v-model="loginForm.username"  prefix-icon="iconfont icon-icon-test"></el-input>
         </el-form-item>
         <!--密码-->
