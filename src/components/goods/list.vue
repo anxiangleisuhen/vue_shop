@@ -11,10 +11,13 @@
         <el-card>
             <el-row :gutter="20">
                 <el-col :span="8">
-                    <el-input placeholder="请输入内容" v-model="queryInfo.query"  clearable @clear="getGoodsList">
+                    <el-input placeholder="请输入内容"
+                     v-model="queryInfo.query" 
+                     clearable @clear="getGoodsList">
                         <!-- @click="handleCurrentChange(1);getGoodsList" 调用这个办法是解决用户没有在第一页发起搜索请求时查找不到数据的问题，
                         强制触发当前页码值为1的函数之后再调用获取相应数值的办法 -->
-                    <el-button slot="append" icon="el-icon-search"  @click="handleCurrentChange(1);getGoodsList"></el-button>
+                    <el-button slot="append" icon="el-icon-search"
+                      @click="handleCurrentChange(1);getGoodsList"></el-button>
                 </el-input>
                 </el-col>
                 <el-col :span="4">
@@ -38,7 +41,7 @@
                 </el-table-column>
                 <el-table-column label="操作" width="200px">
                     <template v-slot="scope">
-                        <el-button type="warning" icon="el-icon-edit" size="mini">编辑</el-button>
+                        <el-button type="warning" icon="el-icon-edit" size="mini" @click="editgoods(scope.row.goods_id)">编辑</el-button>
                         <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeId(scope.row.goods_id)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -69,7 +72,9 @@ export default {
             //商品列表
             goodslist:[],
             //总数据条数
-            total:0
+            total:0,
+           /*  获取修改商品信息的列表数据
+            editgoodslist:[] */
         }
     },
     created(){
@@ -119,6 +124,27 @@ export default {
         //添加商品跳转功能
         goAddpage(){
             this.$router.push('/goods/add')
+        },
+        /* //查询商品信息,为了尝试带参数跳转页面，这个在本页面获取到数据的方法先不用
+         async editgoods(goods_id){
+           const {data:res} = await this.$http.get(`goods/${goods_id}`)
+          if(res.meta.status !== 200){
+              return this.$message.error('获取商品数据失败！') 
+          }
+          this.editgoodslist = res.data
+          console.log(this.editgoodslist) 
+          //console.log(goods_id)
+        }*/
+        //成功完成带参数的跳转页面
+        editgoods(id){
+            console.log("查询成功",id);
+            this.$router.push({
+                path:'/goods/editpaper',
+                query:{
+                    id:id
+                }
+            }
+            );
         }
     }
 }
